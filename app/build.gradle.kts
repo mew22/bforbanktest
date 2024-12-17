@@ -1,20 +1,24 @@
+import com.sd.bforbanktest.build_logic.convention.implementation
+import com.sd.bforbanktest.build_logic.convention.testRuntimeOnly
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.bforbanktest.android.application)
+    alias(libs.plugins.bforbanktest.android.application.compose)
+    alias(libs.plugins.bforbanktest.android.hilt)
 }
 
 android {
     namespace = "com.sd.bforbanktest"
-    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.sd.bforbanktest"
-        minSdk = 24
-        targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -26,21 +30,15 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
+    implementation(libs.androidx.activity.compose)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.navigation.compose)
 }
