@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.core.environment.gateway)
     implementation(projects.core.environment.implementation)
     implementation(projects.core.ui)
+    implementation(projects.feature.pokemonlist)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

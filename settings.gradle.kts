@@ -23,6 +23,7 @@ dependencyResolutionManagement {
 rootProject.name = "bforbanktest"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+include(":feature:pokemonlist")
 include(":core:common:gateway")
 include(":core:common:implementation")
 include(":core:environment:gateway")
