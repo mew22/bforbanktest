@@ -34,6 +34,13 @@ android {
 
 dependencies {
 
+    implementation(projects.core.network)
+    implementation(projects.core.common.gateway)
+    implementation(projects.core.common.implementation)
+    implementation(projects.core.environment.gateway)
+    implementation(projects.core.environment.implementation)
+    implementation(projects.core.ui)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     testImplementation(libs.junit.jupiter.api)
