@@ -39,6 +39,7 @@ import kotlinx.collections.immutable.persistentListOf
 fun PokemonListRoute(
     state: PokemonListState,
     dispatch: (PokemonListEvent) -> Unit,
+    navigateToDetail: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Crossfade(
@@ -65,7 +66,7 @@ fun PokemonListRoute(
                     list = status.list,
                     isLoading = state.isLoading,
                     dispatch = dispatch,
-                    modifier = modifier,
+                    navigateToDetail = navigateToDetail,
                 )
             }
         }
@@ -78,6 +79,7 @@ fun PokemonListScreen(
     list: PersistentList<PokemonListItem>,
     isLoading: Boolean,
     dispatch: (PokemonListEvent) -> Unit,
+    navigateToDetail: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state = rememberLazyListState()
@@ -108,7 +110,8 @@ fun PokemonListScreen(
         ) {
             itemsIndexed(list, key = { _, item -> item.name }) { _, pokemon ->
                 PokemonListCard(
-                    pokemon = list[pokemon],
+                    pokemon = pokemon,
+                    modifier = Modifier.clickable { navigateToDetail(pokemon.name) }
                 )
             }
 
