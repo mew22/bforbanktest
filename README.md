@@ -37,14 +37,14 @@ As an improvement, I would like to check if it is possible to use it without ref
 
 ### Technical choices
 
-I choose to use Gradle KTS with build convention structure to manage the project configuration, while it is a powerful tool that allow autocompletion, it also provide all the features of Kotlin language
+I choose to use Gradle KTS with build convention structure to manage the project configuration, while it is a powerful tool that allow autocompletion, it also provide all the features of Kotlin language.
 
-I used Hilt to manage the dependency injection. This library has its pros (simplicity, compile time dependency resolution, reduce verbosity) and of course its cons (tie to android)
+I used Hilt to manage the dependency injection. This library has its pros (simplicity, compile time dependency resolution, reduce verbosity) and of course its cons (tie to android).
 
 I used Kotlin Flow to communicate the data between the different layers because it is a native Kotlin API and offers better integration with "reactive" operators.
 It also avoid to have android objects like LiveData in the domain and make testing easier.
 
-I used Jetpack Compose declarative UI framework coupled with the navigation library to navigate inside features screen
+I used Jetpack Compose declarative UI framework coupled with the navigation library to navigate inside features screen.
 
 An handmade paging system as been implemented to avoid using JetPack Pager3 lib.
 
@@ -101,7 +101,6 @@ There are some improvements that I would like to add later:
 - The application could have a cache first strategy so it would show cached data until a refresh has been manually triggered by the user.
   Using this caching strategy would allow to have most of the feature working in an offline mode and to enforce a lower data consumption.
 - Implementing Pager3 library for paging data, if it respect clean architecture principle
-- Current LazyColumn implementation has a scroll state issue when updating its data, see https://issuetracker.google.com/issues/214253526
 - Replace Hilt by a Kotlin dependency injection to be able to take advantage of Kotlin only module for feature data & domain and core gateway modules
 - Replacing feature sub package ui, data & domain to be gradle modules
 - Another good approach would be to add dynamic feature modules for managing custom deliveries in order to improve scalability and performance. (I mean to not load useless feature)

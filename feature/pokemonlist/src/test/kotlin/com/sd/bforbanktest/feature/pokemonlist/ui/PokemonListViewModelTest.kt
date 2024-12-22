@@ -10,7 +10,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -38,7 +37,7 @@ class PokemonListViewModelTest {
         PokemonListItem("c"),
     )
 
-    private val mockDataImmutableList = mockDataSet.toPersistentList()
+    private val mockDataMutableList = mockDataSet.toMutableList()
 
     @Test
     fun `GIVEN usecase has data WHEN usecase provide data THEN update state`() = runTest {
@@ -56,7 +55,7 @@ class PokemonListViewModelTest {
         viewModel.state.test {
             assertEquals(
                 PokemonListState(
-                    status = PokemonListState.Status.Success(mockDataImmutableList)
+                    status = PokemonListState.Status.Success(mockDataMutableList)
                 ),
                 awaitItem()
             )

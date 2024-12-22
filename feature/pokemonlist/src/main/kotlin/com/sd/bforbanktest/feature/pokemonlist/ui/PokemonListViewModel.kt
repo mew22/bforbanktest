@@ -5,7 +5,6 @@ import com.sd.bforbank.core.common.LogService
 import com.sd.bforbank.core.ui.MviViewModel
 import com.sd.bforbanktest.feature.pokemonlist.domain.PokemonListItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -30,17 +29,15 @@ class PokemonListViewModel @Inject constructor(
     private fun loadMore() {
         internalState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            useCase.loadMore(limit = ITEM_PER_PAGE,)
-                .onSuccess {
-                    internalState.update { state ->
-                        state.copy(isLoading = false)
-                    }
+            useCase.loadMore(limit = ITEM_PER_PAGE).onSuccess {
+                internalState.update { state ->
+                    state.copy(isLoading = false)
                 }
-                .onFailure {
-                    internalState.update { state ->
-                        state.copy(isLoading = false, status = PokemonListState.Status.Error)
-                    }
+            }.onFailure {
+                internalState.update { state ->
+                    state.copy(isLoading = false, status = PokemonListState.Status.Error)
                 }
+            }
         }
     }
 
@@ -49,7 +46,14 @@ class PokemonListViewModel @Inject constructor(
             internalState.update { state ->
                 state.copy(
                     status = PokemonListState.Status.Success(
-                        list = data.toPersistentList()
+                        list = state.asSuccessOrNull()
+                        ?.run {
+                            list.apply {
+                                clear()
+                                addAll(data)
+                            }
+                        }
+                        ?: data.toMutableList()
                     )
                 )
             }

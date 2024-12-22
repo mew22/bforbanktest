@@ -2,8 +2,6 @@ package com.sd.bforbanktest.feature.pokemonlist.ui
 
 import androidx.compose.runtime.Immutable
 import com.sd.bforbanktest.feature.pokemonlist.domain.PokemonListItem
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 
 @Immutable
 data class PokemonListState(
@@ -13,9 +11,13 @@ data class PokemonListState(
     sealed class Status {
         data object Idle : Status()
         data class Success(
-            val list: PersistentList<PokemonListItem> = persistentListOf(),
+            // We need to keep the same list instance to preserve scrolling state after change, and use MutableList instead of List or PersitentList
+            val list: MutableList<PokemonListItem> = mutableListOf(),
         ) : Status()
 
         data object Error : Status()
     }
 }
+
+fun PokemonListState.asSuccessOrNull(): PokemonListState.Status.Success? =
+    this.status as? PokemonListState.Status.Success

@@ -32,8 +32,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sd.bforbanktest.feature.pokemonlist.domain.PokemonListItem
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun PokemonListRoute(
@@ -76,7 +74,7 @@ fun PokemonListRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonListScreen(
-    list: PersistentList<PokemonListItem>,
+    list: MutableList<PokemonListItem>,
     isLoading: Boolean,
     dispatch: (PokemonListEvent) -> Unit,
     navigateToDetail: (String) -> Unit,
@@ -162,5 +160,5 @@ fun LazyListState.shouldLoadMore(offset: Int = 3, isLoading: Boolean = false) = 
 @Preview(showBackground = true)
 @Composable
 private fun PokemonListPreview() {
-    PokemonListScreen(persistentListOf(), false, {}, {})
+    PokemonListScreen(mutableListOf(), false, {}, {})
 }
