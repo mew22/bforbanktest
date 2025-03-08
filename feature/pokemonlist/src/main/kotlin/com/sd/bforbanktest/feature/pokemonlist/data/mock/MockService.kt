@@ -2,6 +2,8 @@ package com.sd.bforbanktest.feature.pokemonlist.data.mock
 
 import com.sd.bforbanktest.feature.pokemonlist.data.JsonPokemonListItem
 import com.sd.bforbanktest.feature.pokemonlist.data.JsonResponse
+import com.sd.bforbanktest.feature.pokemonlist.data.JsonTypeResponse
+import com.sd.bforbanktest.feature.pokemonlist.data.JsonTypeResponsePokemon
 import com.sd.bforbanktest.feature.pokemonlist.data.PokemonListService
 import kotlinx.coroutines.delay
 
@@ -63,6 +65,23 @@ object MockService {
             return Result.success(
                 JsonResponse(
                     pokemonList.drop(offset).take(limit)
+                )
+            )
+        }
+
+        override suspend fun getPagedPokemonByType(
+            typeName: String,
+            limit: Int,
+            offset: Int
+        ): Result<JsonTypeResponse> {
+            delay(timeMillis = 5000)
+            return Result.success(
+                JsonTypeResponse(
+                    pokemonList.map {
+                        JsonTypeResponsePokemon(it)
+                    }
+                        .drop(offset)
+                        .take(limit)
                 )
             )
         }

@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -31,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sd.bforbank.core.ui.component.DefaultBackAction
+import com.sd.bforbank.core.ui.component.NavBar
 import com.sd.bforbanktest.feature.pokemonlist.domain.PokemonListItem
 
 @Composable
@@ -38,6 +39,7 @@ fun PokemonListRoute(
     state: PokemonListState,
     dispatch: (PokemonListEvent) -> Unit,
     navigateToDetail: (String) -> Unit,
+    popUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Crossfade(
@@ -64,6 +66,7 @@ fun PokemonListRoute(
                     list = status.list,
                     isLoading = state.isLoading,
                     dispatch = dispatch,
+                    popUp = popUp,
                     navigateToDetail = navigateToDetail,
                 )
             }
@@ -78,6 +81,7 @@ fun PokemonListScreen(
     isLoading: Boolean,
     dispatch: (PokemonListEvent) -> Unit,
     navigateToDetail: (String) -> Unit,
+    popUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state = rememberLazyListState()
@@ -91,7 +95,10 @@ fun PokemonListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Pokemon List") })
+            NavBar(
+                title = "Pokemon List",
+                navigationAction = DefaultBackAction { popUp() }
+            )
         },
         modifier = modifier.fillMaxSize(),
     ) { innerPadding ->
@@ -160,5 +167,5 @@ fun LazyListState.shouldLoadMore(offset: Int = 3, isLoading: Boolean = false) = 
 @Preview(showBackground = true)
 @Composable
 private fun PokemonListPreview() {
-    PokemonListScreen(mutableListOf(), false, {}, {})
+    PokemonListScreen(mutableListOf(), false, {}, {}, {})
 }

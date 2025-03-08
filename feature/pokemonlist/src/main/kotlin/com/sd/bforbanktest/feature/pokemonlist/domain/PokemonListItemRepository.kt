@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 interface PokemonListItemRepository {
 
     val data: Flow<Set<PokemonListItem>?>
-    suspend fun loadMore(limit: Int): Result<Set<PokemonListItem>>
+    suspend fun loadMore(limit: Int, typeName: String?): Result<Set<PokemonListItem>>
 }

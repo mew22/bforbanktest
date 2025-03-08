@@ -9,6 +9,6 @@ class PokemonListItemUseCase @Inject constructor(
 ) {
     val data: Flow<Set<PokemonListItem>> = repository.data.mapNotNull { it }
 
-    suspend fun loadMore(limit: Int): Result<Unit> =
-        repository.loadMore(limit = limit).map { }
+    suspend fun loadMore(limit: Int, typeName: String? = null): Result<Unit> =
+        repository.loadMore(limit = limit, typeName = typeName,).map { }
 }

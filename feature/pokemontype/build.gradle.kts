@@ -1,10 +1,12 @@
+import com.sd.bforbanktest.build_logic.convention.implementation
+
 plugins {
     alias(libs.plugins.bforbanktest.android.feature)
     alias(libs.plugins.bforbanktest.android.library.compose)
 }
 
 android {
-    namespace = "com.sd.bforbanktest.feature.pokemonlist"
+    namespace = "com.sd.bforbanktest.feature.pokemontype"
 
 }
 

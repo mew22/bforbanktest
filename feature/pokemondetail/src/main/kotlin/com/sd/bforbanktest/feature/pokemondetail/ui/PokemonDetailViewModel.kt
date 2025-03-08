@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sd.bforbank.core.common.LogService
 import com.sd.bforbank.core.ui.MviViewModel
 import com.sd.bforbanktest.feature.pokemondetail.domain.PokemonDetailUseCase
+import com.sd.bforbanktest.feature.pokemondetail.lib.POKEMON_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

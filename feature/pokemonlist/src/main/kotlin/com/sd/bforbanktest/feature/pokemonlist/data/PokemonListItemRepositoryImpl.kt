@@ -14,13 +14,24 @@ internal class PokemonListItemRepositoryImpl @Inject constructor(
     private var page = 0
     override val data = MutableStateFlow<PersistentSet<PokemonListItem>?>(null)
 
-    override suspend fun loadMore(limit: Int): Result<PersistentSet<PokemonListItem>> =
-        pokemonListService.getPagedPokemon(limit, page * limit)
-            .mapCatching { it.results.toDomain() }
-            .onSuccess { newList ->
-                page++
-                data.update { state ->
-                    state?.addAll(newList) ?: newList.toPersistentSet()
-                }
-            }
+    override suspend fun loadMore(
+        limit: Int,
+        typeName: String?
+    ): Result<PersistentSet<PokemonListItem>> =
+        if (typeName != null) {
+            pokemonListService.getPagedPokemonByType(typeName, limit, page * limit)
+                .mapCatching { it.pokemon.toDomain() }
+                .onSucceed()
+        } else {
+            pokemonListService.getPagedPokemon(limit, page * limit)
+                .mapCatching { it.results.toDomain() }
+                .onSucceed()
+        }
+
+    private fun Result<PersistentSet<PokemonListItem>>.onSucceed() = this.onSuccess { newList ->
+        page++
+        data.update { state ->
+            state?.addAll(newList) ?: newList.toPersistentSet()
+        }
+    }
 }

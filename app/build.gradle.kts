@@ -1,6 +1,3 @@
-import com.sd.bforbanktest.build_logic.convention.implementation
-import com.sd.bforbanktest.build_logic.convention.testRuntimeOnly
-
 plugins {
     alias(libs.plugins.bforbanktest.android.application)
     alias(libs.plugins.bforbanktest.android.application.compose)
@@ -42,6 +39,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.pokemonlist)
     implementation(projects.feature.pokemondetail)
+    implementation(projects.feature.pokemontype)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

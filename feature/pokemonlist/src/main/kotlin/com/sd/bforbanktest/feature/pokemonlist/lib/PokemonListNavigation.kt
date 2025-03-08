@@ -1,4 +1,4 @@
-package com.sd.bforbanktest.feature.pokemonlist.ui
+package com.sd.bforbanktest.feature.pokemonlist.lib
 
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -7,16 +7,23 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.sd.bforbanktest.feature.pokemonlist.ui.PokemonListRoute
+import com.sd.bforbanktest.feature.pokemonlist.ui.PokemonListViewModel
 import kotlinx.serialization.Serializable
 
-@Serializable
-object PokemonListNavigation
+const val TYPE_NAME = "typeName"
 
-fun NavController.navigateToPokemonList(navOptions: NavOptions? = null) {
-    navigate(PokemonListNavigation, navOptions)
+@Serializable
+data class PokemonListNavigation(val typeName: String)
+
+fun NavController.navigateToPokemonList(typeName: String, navOptions: NavOptions? = null) {
+    navigate(PokemonListNavigation(typeName), navOptions)
 }
 
-fun NavGraphBuilder.pokemonListScreen(navigateToDetail: (String) -> Unit) {
+fun NavGraphBuilder.pokemonListScreen(
+    navigateToDetail: (String) -> Unit,
+    popUp: () -> Unit,
+) {
     composable<PokemonListNavigation> {
         val viewModel = hiltViewModel<PokemonListViewModel>()
         val state by viewModel.state.collectAsStateWithLifecycle()
@@ -24,6 +31,7 @@ fun NavGraphBuilder.pokemonListScreen(navigateToDetail: (String) -> Unit) {
             state = state,
             dispatch = viewModel::dispatch,
             navigateToDetail = navigateToDetail,
+            popUp = popUp,
         )
     }
 }

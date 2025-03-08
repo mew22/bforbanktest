@@ -6,16 +6,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.sd.bforbanktest.feature.pokemondetail.ui.navigateToPokemonDetail
-import com.sd.bforbanktest.feature.pokemondetail.ui.pokemonDetailScreen
-import com.sd.bforbanktest.feature.pokemonlist.ui.PokemonListNavigation
-import com.sd.bforbanktest.feature.pokemonlist.ui.pokemonListScreen
+import com.sd.bforbanktest.feature.pokemondetail.lib.navigateToPokemonDetail
+import com.sd.bforbanktest.feature.pokemondetail.lib.pokemonDetailScreen
+import com.sd.bforbanktest.feature.pokemonlist.lib.navigateToPokemonList
+import com.sd.bforbanktest.feature.pokemonlist.lib.pokemonListScreen
+import com.sd.bforbanktest.feature.pokemontype.lib.PokemonTypeListNavigation
+import com.sd.bforbanktest.feature.pokemontype.lib.pokemonTypeListScreen
 import kotlin.reflect.KClass
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
-    startDestination: KClass<*> = PokemonListNavigation::class,
+    startDestination: KClass<*> = PokemonTypeListNavigation::class,
 ) {
     val navController = rememberNavController()
     NavHost(
@@ -23,8 +25,12 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination,
     ) {
-        pokemonListScreen(navigateToDetail = navController::navigateToPokemonDetail)
-        pokemonDetailScreen(popUp = navController::safePopBackStack,)
+        pokemonTypeListScreen(navigateToList = navController::navigateToPokemonList)
+        pokemonListScreen(
+            navigateToDetail = navController::navigateToPokemonDetail,
+            popUp = navController::safePopBackStack
+        )
+        pokemonDetailScreen(popUp = navController::safePopBackStack)
     }
 }
 
